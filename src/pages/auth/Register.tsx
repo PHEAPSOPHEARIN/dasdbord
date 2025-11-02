@@ -28,8 +28,9 @@ export default function Register() {
     setLoading(false);
 
     if (res.ok) {
-      localStorage.setItem("company_token", res.token);
-      localStorage.setItem("company_user", JSON.stringify({ name, email }));
+if (res.token) {
+  localStorage.setItem("company_token", res.token);
+}      localStorage.setItem("company_user", JSON.stringify({ name, email }));
       navigate("/dashboard");
     } else {
       setError(res.error || "Registration failed");
@@ -58,6 +59,7 @@ export default function Register() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
+                autoComplete="name"
                 className="w-full border rounded-md px-10 py-2 focus:ring-2 focus:ring-green-500"
                 placeholder="John Doe"
               />
@@ -73,6 +75,7 @@ export default function Register() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                autoComplete="email"
                 className="w-full border rounded-md px-10 py-2 focus:ring-2 focus:ring-green-500"
                 placeholder="you@company.com"
               />
@@ -88,6 +91,7 @@ export default function Register() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                autoComplete="new-password"
                 className="w-full border rounded-md px-10 py-2 focus:ring-2 focus:ring-green-500"
                 placeholder="••••••••"
               />
