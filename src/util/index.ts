@@ -104,20 +104,27 @@ export function isValidPhone(phone: string): boolean {
 // AUTHENTICATION UTILITIES
 // ============================================================
 
-import { STORAGE_KEYS } from "./config";
+/**
+ * Storage keys constants (duplicated here to avoid circular import)
+ */
+const AUTH_STORAGE_KEYS = {
+  TOKEN: "company_token",
+  USER: "company_user",
+  REFRESH_TOKEN: "company_refresh_token",
+} as const;
 
 /**
  * Checks if user is authenticated
  */
 export function isAuthenticated(): boolean {
-  return !!localStorage.getItem(STORAGE_KEYS.TOKEN);
+  return !!localStorage.getItem(AUTH_STORAGE_KEYS.TOKEN);
 }
 
 /**
  * Gets current user from localStorage
  */
 export function getCurrentUser(): { name: string; email: string } | null {
-  const userStr = localStorage.getItem(STORAGE_KEYS.USER);
+  const userStr = localStorage.getItem(AUTH_STORAGE_KEYS.USER);
   if (!userStr) return null;
   try {
     return JSON.parse(userStr);
@@ -130,17 +137,17 @@ export function getCurrentUser(): { name: string; email: string } | null {
  * Gets authentication token
  */
 export function getAuthToken(): string | null {
-  return localStorage.getItem(STORAGE_KEYS.TOKEN);
+  return localStorage.getItem(AUTH_STORAGE_KEYS.TOKEN);
 }
 
 /**
  * Saves authentication data
  */
 export function saveAuthData(token: string, user: any, refreshToken?: string): void {
-  localStorage.setItem(STORAGE_KEYS.TOKEN, token);
-  localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(user));
+  localStorage.setItem(AUTH_STORAGE_KEYS.TOKEN, token);
+  localStorage.setItem(AUTH_STORAGE_KEYS.USER, JSON.stringify(user));
   if (refreshToken) {
-    localStorage.setItem(STORAGE_KEYS.REFRESH_TOKEN, refreshToken);
+    localStorage.setItem(AUTH_STORAGE_KEYS.REFRESH_TOKEN, refreshToken);
   }
 }
 
@@ -148,9 +155,9 @@ export function saveAuthData(token: string, user: any, refreshToken?: string): v
  * Clears authentication data
  */
 export function clearAuth(): void {
-  localStorage.removeItem(STORAGE_KEYS.TOKEN);
-  localStorage.removeItem(STORAGE_KEYS.USER);
-  localStorage.removeItem(STORAGE_KEYS.REFRESH_TOKEN);
+  localStorage.removeItem(AUTH_STORAGE_KEYS.TOKEN);
+  localStorage.removeItem(AUTH_STORAGE_KEYS.USER);
+  localStorage.removeItem(AUTH_STORAGE_KEYS.REFRESH_TOKEN);
 }
 
 // ============================================================
@@ -261,7 +268,7 @@ export function formatFileSize(bytes: number): string {
  * Removes duplicates from array
  */
 export function unique<T>(array: T[]): T[] {
-  return [...new Set(array)];
+  return Array.from(new Set(array));
 }
 
 /**

@@ -4,6 +4,7 @@
 /**
  * API Configuration
  */
+
 export const API_CONFIG = {
   BASE_URL: process.env.REACT_APP_API_BASE_URL || "http://localhost:3001",
   VERSION: "v1",
@@ -19,12 +20,11 @@ export const API_URL = `${API_CONFIG.BASE_URL}/api/${API_CONFIG.VERSION}`;
  * LocalStorage Keys
  */
 export const STORAGE_KEYS = {
-  TOKEN: "company_token",
-  USER: "company_user",
-  REFRESH_TOKEN: "company_refresh_token",
-  THEME: "app_theme",
-  LANGUAGE: "app_language",
+  TOKEN: "auth_token",
+  USER: "auth_user",
+  REFRESH_TOKEN: "refresh_token",
 } as const;
+
 
 /**
  * API Endpoints
